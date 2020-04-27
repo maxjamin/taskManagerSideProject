@@ -2,8 +2,8 @@
 #include "user.h"
 #include <map>
 
-User::User(std::string username, int password) : name{username},
-password{password}
+User::User(std::string username, unsigned long int password) : name{username},
+password{password}, loggedIn{true}
 {
 	//users = new std::map<std::string, User*>();
 }
@@ -17,7 +17,7 @@ User::~User()
 
 void User::displayUser()
 {
-	std::cout << "USER:: " << name << "\n";
+	std::cout << "USER:: " << name << " - " << password <<"\n";
 }
 		
 void User::displayDay(int day, int month, int year)

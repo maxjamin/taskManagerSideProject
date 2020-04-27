@@ -16,7 +16,7 @@ class Controller
 		Controller();
 		~Controller();
 
-		int login(std::string userName, std::string password);
+		User* login(std::string userName, std::string password);
 		int displayUser(std::string UserName);
 		
 

@@ -17,9 +17,24 @@ Controller::~Controller()
 	users = NULL;
 }
 
-int Controller::login(std::string UserName, std::string password)
+User* Controller::login(std::string userName, std::string password)
 {	
+	//hash password passed to function
+	unsigned long int hashedpassword = hashMaker(password);
+	//find username 
+	std::map<std::string, User*>:: iterator it;
+	it = users->find(userName);
 
+	//check to see if user is found
+	if(it == users->end())
+		return NULL;
+
+
+	//check passwords match
+	if(hashedpassword == it->second->getUserPassword())
+	{
+		return it->second;
+	}
 }
 
 int Controller::displayUser(std::string userName)
@@ -32,12 +47,18 @@ int Controller::addUser(std::string userName, std::string password)
 {
 	//check for admin password
 
+	//check that userName dosn't exist in map
+	std::map<std::string, User*>:: iterator it;
+	it =users->find(userName);
+	if(it == users->end())
+	{
 
-	unsigned long int hashedpassword = hashMaker(password);
-	std::cout << "hashedpassword " << hashedpassword << " " <<
-	userName <<" \n";
-	User *user = new User(userName, hashedpassword);
-	users->insert(std::make_pair(userName,user));
+		unsigned long int hashedpassword = hashMaker(password);
+		std::cout << "hashedpassword " << hashedpassword << " " <<
+		userName <<" \n";
+		User *user = new User(userName, hashedpassword);
+		users->insert(std::make_pair(userName,user));
+	}
 
 }
 
@@ -99,10 +120,26 @@ int Controller::readFromDatabase()
 
 int Controller::updateDatabase()
 {
-	for(std::map<std::string, User*>::iterator it=users->begin();
+	std::ofstream myfile("database.txt");
+	std::string line;
+	std::string line2;
+
+	if(myfile.is_open())
+	{
+		//iterate through map */
+		for(std::map<std::string, User*>::iterator it=users->begin();
 		it != users->end();
 		++it)
-	{
+		{
+			line = it->second->getUserName();
+			line2 = std::to_string(it->second->getUserPassword());
+			std::cout << "line is " << line << " - " <<
+			line2 << "\n";
 
-	}
+			myfile << line << " " << line2 << "\n";
+
+		}
+	}else
+		std::cout << "Error opening file to update Databse\n";   
+
 }
