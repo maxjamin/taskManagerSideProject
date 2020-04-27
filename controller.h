@@ -17,9 +17,7 @@ class Controller
 		~Controller();
 
 		User* login(std::string userName, std::string password);
-		int displayUser(std::string UserName);
 		
-
 		//functions only for admin
 		int addUser(std::string userName, std::string password);
 		int removeUser(std::string userName, std::string password);

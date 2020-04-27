@@ -37,11 +37,6 @@ User* Controller::login(std::string userName, std::string password)
 	}
 }
 
-int Controller::displayUser(std::string userName)
-{
-
-}
-
 
 int Controller::addUser(std::string userName, std::string password)
 {
@@ -67,6 +62,13 @@ int Controller::removeUser(std::string userName, std::string password)
 {
 	//check for admin password
 
+	//check that userName dose exist in map
+	std::map<std::string, User*>:: iterator it;
+	it =users->find(userName);
+	if(it != users->end())
+	{
+		users->erase(it);
+	}
 
 }
 
