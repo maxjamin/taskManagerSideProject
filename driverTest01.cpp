@@ -64,7 +64,7 @@ int main()
 			std::string day;
 			std::cout << "Please enter day ex. d/m/y \"00/00/0000\": ";
 			getline(std::cin, day);
-			testUser->displayDay(day);
+			testUser->displayTopPriorityDay(day);
 		}
 		else if(userInput == "add user")
 		{

@@ -11,8 +11,8 @@ password{password}, loggedIn{true}
 
 User::~User()
 {
-	//delete users;
-	//users = NULL;
+	delete days;
+	days = NULL;
 }
 
 void User::addDay(std::string day)
@@ -33,8 +33,11 @@ void User::addTask(std::string day, std::string task, int priorityLevel)
 	{
 		std::cout << "No day.. adding day before making task\n";
 		addDay(day);
+		//find newly created inserted pair and update iterator variable 
+		it = days->find(day);
 
 	}
+
 	std::cout << "Task added\n";
 	it->second.push(new Task(priorityLevel, task));
 
@@ -47,18 +50,30 @@ void User::displayUser()
 	std::cout << "USER:: " << name << " - " << password <<"\n";
 }
 		
-void User::displayDay(std::string day)
+void User::displayTopPriorityDay(std::string day)
 {
 	std::map<std::string, std::priority_queue<Task*>>:: iterator it;
 	it =days->find(day);
+	std::string userInput;
 
 	//make sure the day is not empty
-	if(!it->second.empty())
+	if(!it->second.empty() && it != days->end())
 	{ 
-		Task *task = it->second.top();
-		std::cout << "Display " << day << " root Task " << task->getName()
-	  	<< "\n";
+		Task * task = it->second.top();
+		std::cout << "\nTop task for ";
+		task->displayTask();
+		std::cout << "For: " << day << "\n";
+
+		std::cout << "Has the task been completed? (y/n): ";
+		std::getline(std::cin, userInput);
+
+		if(userInput == "n");
+		{	std::cout << "erase task " << userInput << "\n";
+			//it->second.pop();
+			task = NULL;
 		}
+
+	}
 	else
 	{
 		std::cout << "No tasks for this day\n";

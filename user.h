@@ -22,7 +22,7 @@ class User
 		~User();
 		void addDay(std::string day); // format "00/00/0000" month day year
 		void displayUser();
-		void displayDay(std::string day);
+		void displayTopPriorityDay(std::string day);
 		void addTask(std::string day, std::string task, int priorityLevel);
 		std::string getUserName() { return name; }
 		unsigned long int getUserPassword() {return password; }
