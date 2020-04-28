@@ -17,9 +17,10 @@ User::~User()
 
 void User::addDay(std::string day)
 {
+	std::map<std::string, std::priority_queue<Task*>>:: iterator it;
+	it =days->find(day);
 
-	days->insert(std::make_pair(day, std::priority_queue<Task*>()));
-	
+	days->insert(std::make_pair(day, std::priority_queue<Task*>()));	
 }
 
 void User::addTask(std::string day, std::string task, int priorityLevel)
@@ -28,13 +29,17 @@ void User::addTask(std::string day, std::string task, int priorityLevel)
 	it =days->find(day);
 
 	//make sure the day is assigned a queue
-	if(it != days->end())
+	if(it == days->end())
 	{
-		std::cout << "Task added\n";
-		Task *tempTask = new Task(priorityLevel, task);
-		it->second.push(tempTask);
+		std::cout << "No day.. adding day before making task\n";
+		addDay(day);
 
 	}
+	std::cout << "Task added\n";
+	it->second.push(new Task(priorityLevel, task));
+
+	std::cout << "Day is " << it->second.empty() << "\n";
+
 }
 
 void User::displayUser()
@@ -51,8 +56,8 @@ void User::displayDay(std::string day)
 	if(!it->second.empty())
 	{ 
 		Task *task = it->second.top();
-		//std::cout << "Display " << day << " root Task " << task->getName()
-	  	//<< "\n";
+		std::cout << "Display " << day << " root Task " << task->getName()
+	  	<< "\n";
 		}
 	else
 	{
